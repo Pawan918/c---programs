@@ -1,24 +1,27 @@
 #include<bits/stdc++.h>
+#define  INF 1e9
 typedef long long ll;
+
 using namespace std;
-const int mod = 1e9+7;
 
 int main(){
     int n,x;
     cin>>n>>x;
     vector<int> coins(n);
-    vector<ll> times(x+1,0);
-    times[0] = 1;
+    vector<int> value(x+1,INF);
     for(int i=0;i<n;i++){
         cin>>coins[i];
     }
+    value[0]=0;
     for(int i=0;i<=x;i++){
         for(int j=0;j<n;j++){
-            if(i-coins[j] >= 0){
-                times[i] = (times[i]+times[i-coins[j]])%mod;
-            }
+            if(i-coins[j] >= 0)
+            value[i] = min(value[i],value[i-coins[j]]+1);
         }
     }
-    cout<<times[x];
+    if(value[x] == INF){
+        cout<<-1;
+    } 
+    else cout<<value[x];
     return 0;
 }
